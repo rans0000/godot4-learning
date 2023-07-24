@@ -1,0 +1,7 @@
+[gd_scene load_steps=3 format=3 uid="uid://dx6h280hajcww"]
+
+[ext_resource type="PackedScene" uid="uid://dpa7o5qo3e0ep" path="res://scenes/Box.tscn" id="1_82skk"]
+[ext_resource type="Material" uid="uid://eaqgtoibtmr" path="res://materials/blue_mat.tres" id="2_7ppcy"]
+
+[node name="CSGBox3D" instance=ExtResource("1_82skk")]
+material_override = ExtResource("2_7ppcy")

@@ -1,8 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://m4ebwmyq5phx"]
+[gd_scene load_steps=12 format=3 uid="uid://m4ebwmyq5phx"]
 
 [ext_resource type="Material" uid="uid://dkiqdu4cicses" path="res://materials/green_mat.tres" id="1_mw5ca"]
 [ext_resource type="Script" path="res://scripts/PlayerMovement.gd" id="2_5ciyn"]
-[ext_resource type="Material" uid="uid://buqe53e08j7qf" path="res://materials/red_mat.tres" id="3_l0s8s"]
+[ext_resource type="PackedScene" uid="uid://dpa7o5qo3e0ep" path="res://scenes/Box.tscn" id="3_u1j4r"]
+[ext_resource type="Script" path="res://scripts/Spawner.gd" id="4_d6dxq"]
+[ext_resource type="PackedScene" uid="uid://dx6h280hajcww" path="res://scenes/SpawnedNode.tscn" id="5_qmvs7"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_d8amr"]
 size = Vector3(10, 0.1, 10)
@@ -50,9 +52,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.07065, 0)
 script = ExtResource("2_5ciyn")
 mouseSensitivity = 0.3
 
-[node name="CSGBox3D" type="CSGBox3D" parent="CharacterBody3D"]
-material_override = ExtResource("3_l0s8s")
-size = Vector3(0.5, 0.5, 0.5)
+[node name="CSGBox3D" parent="CharacterBody3D" instance=ExtResource("3_u1j4r")]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
 shape = SubResource("BoxShape3D_7rm5r")
@@ -60,6 +60,14 @@ shape = SubResource("BoxShape3D_7rm5r")
 [node name="Camera3D" type="Camera3D" parent="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 0.954724, 0.297492, 0, -0.297492, 0.954724, 0, 0.928077, 2.63136)
 fov = 60.0
+
+[node name="Spawner" type="Node3D" parent="CharacterBody3D" node_paths=PackedStringArray("SpawnLocation")]
+script = ExtResource("4_d6dxq")
+SpawnLocation = NodePath("../SpawnLocation")
+NodeToSpawn = ExtResource("5_qmvs7")
+
+[node name="SpawnLocation" type="Node3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.971832)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_r70ab")

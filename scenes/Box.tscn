@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://dpa7o5qo3e0ep"]
+
+[ext_resource type="Material" uid="uid://buqe53e08j7qf" path="res://materials/red_mat.tres" id="1_1gxda"]
+
+[node name="CSGBox3D" type="CSGBox3D"]
+material_override = ExtResource("1_1gxda")
+size = Vector3(0.5, 0.5, 0.5)
