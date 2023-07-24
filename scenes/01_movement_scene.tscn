@@ -1,0 +1,69 @@
+[gd_scene load_steps=10 format=3 uid="uid://gttfp188dv6j"]
+
+[ext_resource type="Material" uid="uid://dkiqdu4cicses" path="res://materials/green_mat.tres" id="1_top3o"]
+[ext_resource type="Material" uid="uid://buqe53e08j7qf" path="res://materials/red_mat.tres" id="2_h4p87"]
+[ext_resource type="Script" path="res://scripts/PlayerMovement.gd" id="2_vmjfv"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_d8amr"]
+size = Vector3(10, 0.1, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sbrea"]
+size = Vector3(1, 1, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7rm5r"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_fsun1"]
+
+[sub_resource type="Sky" id="Sky_j1tlt"]
+sky_material = SubResource("PhysicalSkyMaterial_fsun1")
+
+[sub_resource type="Environment" id="Environment_r70ab"]
+background_mode = 2
+background_energy_multiplier = 4.0
+sky = SubResource("Sky_j1tlt")
+
+[node name="01MovementScene" type="Node3D"]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+material_override = ExtResource("1_top3o")
+size = Vector3(10, 0.1, 10)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="CSGBox3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CSGBox3D/StaticBody3D"]
+shape = SubResource("BoxShape3D_d8amr")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -3.5)
+material_override = ExtResource("1_top3o")
+size = Vector3(1, 1, 5)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="CSGBox3D2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CSGBox3D2/StaticBody3D"]
+shape = SubResource("BoxShape3D_sbrea")
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.07065, 0)
+script = ExtResource("2_vmjfv")
+mouseSensitivity = 0.3
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CharacterBody3D"]
+material_override = ExtResource("2_h4p87")
+size = Vector3(0.5, 0.5, 0.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+shape = SubResource("BoxShape3D_7rm5r")
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 0.954724, 0.297492, 0, -0.297492, 0.954724, 0, 0.928077, 2.63136)
+fov = 60.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_r70ab")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.702974, -0.00886636, 0.71116, -0.662659, 0.354963, 0.659458, -0.258282, -0.934838, 0.243654, 2.77565, 3.64767, 0)
+shadow_enabled = true
