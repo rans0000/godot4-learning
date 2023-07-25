@@ -12,7 +12,7 @@ func _ready() -> void:
 	cameraLocalStartingPosition = to_local(cameraNode.global_position);
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	raycast();
 #	if (raycast3D.is_colliding()):
 #		cameraNode.position = Vector3(cameraNode.position.x, cameraNode.position.y, raycast3D.get_collision_point().distance_to(raycast3D.global_position) - standOffDistance);

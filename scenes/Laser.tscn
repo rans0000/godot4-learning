@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://cjuwrtkf1ly7l"]
+
+[ext_resource type="Material" uid="uid://dain5nja6rdge" path="res://materials/laser_mat.tres" id="1_e7bwl"]
+[ext_resource type="Script" path="res://scripts/Laser.gd" id="1_q7f8g"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_2fofa"]
+top_radius = 0.05
+bottom_radius = 0.05
+height = 1.0
+
+[node name="Laser" type="Node3D"]
+script = ExtResource("1_q7f8g")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -0.5)
+material_override = ExtResource("1_e7bwl")
+mesh = SubResource("CylinderMesh_2fofa")

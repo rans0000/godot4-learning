@@ -13,7 +13,7 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
 		rotate(Vector3.UP, deg_to_rad(-event.relative.x * mouseSensitivity));
 
-func  _physics_process(delta: float) -> void:
+func  _physics_process(_delta: float) -> void:
 	movementInputVector = Input.get_vector("move_left", "move_right","move_forward","move_back") * movementSpeed;
 	if is_on_floor():
 		currentYVelocity = 0;
