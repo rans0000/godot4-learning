@@ -1,0 +1,112 @@
+[gd_scene load_steps=17 format=3 uid="uid://blexpiwvfvdkl"]
+
+[ext_resource type="Script" path="res://scripts/MouseLock.gd" id="1_glp6p"]
+[ext_resource type="Material" uid="uid://dkiqdu4cicses" path="res://materials/green_mat.tres" id="2_e7maf"]
+[ext_resource type="Script" path="res://scripts/DamagableTweening.gd" id="3_x1ng3"]
+[ext_resource type="Material" uid="uid://buqe53e08j7qf" path="res://materials/red_mat.tres" id="4_ertp7"]
+[ext_resource type="Script" path="res://scripts/PlayerMovement.gd" id="5_wtits"]
+[ext_resource type="PackedScene" uid="uid://dpa7o5qo3e0ep" path="res://scenes/Box.tscn" id="6_bty3m"]
+[ext_resource type="Script" path="res://scripts/CameraPivot.gd" id="7_0iie0"]
+[ext_resource type="Script" path="res://scripts/CameraCollider.gd" id="8_xfj18"]
+[ext_resource type="Script" path="res://scripts/BlasterController.gd" id="9_pkrxv"]
+[ext_resource type="PackedScene" uid="uid://cjuwrtkf1ly7l" path="res://scenes/Laser.tscn" id="10_6kjlt"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_d8amr"]
+size = Vector3(10, 0.1, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sbrea"]
+size = Vector3(1, 2, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7rm5r"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_fsun1"]
+
+[sub_resource type="Sky" id="Sky_j1tlt"]
+sky_material = SubResource("PhysicalSkyMaterial_fsun1")
+
+[sub_resource type="Environment" id="Environment_r70ab"]
+background_mode = 2
+background_energy_multiplier = 4.0
+sky = SubResource("Sky_j1tlt")
+
+[node name="06TweeningDeatch" type="Node3D"]
+script = ExtResource("1_glp6p")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+material_override = ExtResource("2_e7maf")
+size = Vector3(10, 0.1, 10)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="CSGBox3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CSGBox3D/StaticBody3D"]
+shape = SubResource("BoxShape3D_d8amr")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -3.5)
+material_override = ExtResource("2_e7maf")
+size = Vector3(1, 2, 1)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="CSGBox3D2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CSGBox3D2/StaticBody3D"]
+shape = SubResource("BoxShape3D_sbrea")
+
+[node name="Damagable" type="Node3D" parent="CSGBox3D2/StaticBody3D" node_paths=PackedStringArray("MeshReference")]
+script = ExtResource("3_x1ng3")
+TransitionType = 1
+ScaleSize = Vector3(1.2, 1.2, 1.2)
+RotationDegrees = 60.0
+MeshReference = NodePath("../..")
+BaseMaterial = ExtResource("2_e7maf")
+HitMaterial = ExtResource("4_ertp7")
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.07065, 0)
+collision_layer = 2
+script = ExtResource("5_wtits")
+mouseSensitivity = 0.3
+
+[node name="CSGBox3D" parent="CharacterBody3D" instance=ExtResource("6_bty3m")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+shape = SubResource("BoxShape3D_7rm5r")
+
+[node name="CameraPivot" type="Node3D" parent="CharacterBody3D"]
+script = ExtResource("7_0iie0")
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D/CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.954724, 0.297492, 0, -0.297492, 0.954724, 0, 0.928077, 2.63136)
+fov = 60.0
+
+[node name="RayCast3D" type="RayCast3D" parent="CharacterBody3D/CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.967383, 0.253319, 0, -0.253319, 0.967383, 0, 0.25, 0)
+target_position = Vector3(0, 0, 5)
+
+[node name="CameraCollider" type="Node3D" parent="CharacterBody3D/CameraPivot" node_paths=PackedStringArray("cameraNode", "raycast3D")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+script = ExtResource("8_xfj18")
+cameraNode = NodePath("../Camera3D")
+raycast3D = NodePath("../RayCast3D")
+CameraColliderLayers = 1
+
+[node name="Hand" type="CSGBox3D" parent="CharacterBody3D/CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.973519, 0.228606, 0, -0.228606, 0.973519, 0.283071, 0.057444, -0.2)
+size = Vector3(0.05, 0.05, 0.3)
+
+[node name="RayCast3D" type="RayCast3D" parent="CharacterBody3D/CameraPivot/Hand"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.38419e-07, -0.152138)
+target_position = Vector3(0, 0, -30)
+
+[node name="BlasterController" type="Node3D" parent="CharacterBody3D/CameraPivot/Hand" node_paths=PackedStringArray("raycast")]
+script = ExtResource("9_pkrxv")
+raycast = NodePath("../RayCast3D")
+laserEffect = ExtResource("10_6kjlt")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_r70ab")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.702974, -0.00886636, 0.71116, -0.662659, 0.354963, 0.659458, -0.258282, -0.934838, 0.243654, 2.77565, 3.64767, 0)
+shadow_enabled = true
