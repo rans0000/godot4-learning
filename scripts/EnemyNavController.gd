@@ -1,4 +1,5 @@
 extends Node3D
+class_name EnemyNavController;
 
 @export var targetBody: Node3D;
 @export var movementSpeed: float;
@@ -9,7 +10,7 @@ var lastPosition: Vector3;
 
 
 func _process(_delta: float) -> void:
-	if (targetBody.global_position != lastPosition):
+	if (targetBody != null && targetBody.global_position != lastPosition):
 		lastPosition = targetBody.global_position;
 		setTarget(lastPosition);
 
