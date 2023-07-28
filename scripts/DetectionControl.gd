@@ -1,7 +1,7 @@
 extends Node
 class_name DetectionControl;
 
-@export var enemyNavController: EnemyNavController;
+@export var enemyNavController: EnemyCoreController;
 
 func onPlayerEnter(playerContainer: Node3D):
 	enemyNavController.targetBody = playerContainer;
