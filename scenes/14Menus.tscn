@@ -1,0 +1,437 @@
+[gd_scene load_steps=32 format=3 uid="uid://bmtwwwvfk7d8s"]
+
+[ext_resource type="Script" path="res://scripts/MouseLock.gd" id="1_wpvnw"]
+[ext_resource type="Script" path="res://scripts/EnemyCoreController.gd" id="2_nook3"]
+[ext_resource type="Script" path="res://scripts/DamagableEvent.gd" id="3_s0xax"]
+[ext_resource type="Material" uid="uid://dkiqdu4cicses" path="res://materials/green_mat.tres" id="4_nvg2n"]
+[ext_resource type="Material" uid="uid://buqe53e08j7qf" path="res://materials/red_mat.tres" id="5_7ypge"]
+[ext_resource type="Script" path="res://scripts/DetectionControl.gd" id="6_58n5y"]
+[ext_resource type="Script" path="res://scripts/EnemyCombatControl.gd" id="7_kx6gf"]
+[ext_resource type="PackedScene" uid="uid://dicruy5tj0dt" path="res://scenes/Projectile.tscn" id="8_hj76r"]
+[ext_resource type="Script" path="res://scripts/PlayerMovement.gd" id="9_sm2ld"]
+[ext_resource type="Material" uid="uid://dain5nja6rdge" path="res://materials/laser_mat.tres" id="10_mu7rc"]
+[ext_resource type="PackedScene" uid="uid://dpa7o5qo3e0ep" path="res://scenes/Box.tscn" id="11_w73cc"]
+[ext_resource type="Script" path="res://scripts/CameraPivot.gd" id="12_egijf"]
+[ext_resource type="Script" path="res://scripts/CameraCollider.gd" id="13_uwnva"]
+[ext_resource type="Script" path="res://scripts/BlasterControllerV2.gd" id="14_tk226"]
+[ext_resource type="PackedScene" uid="uid://cjuwrtkf1ly7l" path="res://scenes/Laser.tscn" id="15_f3dok"]
+[ext_resource type="AudioStream" uid="uid://cexfmeipyhaiu" path="res://sounds/blaster-shot-single-5.wav" id="16_5pkfs"]
+[ext_resource type="Script" path="res://scripts/GameStateControl.gd" id="17_e23jp"]
+[ext_resource type="Script" path="res://scripts/PlayerDetectionControl.gd" id="18_16ald"]
+[ext_resource type="AudioStream" uid="uid://4yfkmmsia2xd" path="res://sounds/ambiance_waterfall_loop_03.wav" id="19_60xu5"]
+[ext_resource type="AudioStream" uid="uid://pycu81ydlas7" path="res://sounds/faster-drums-synths.wav" id="20_tfdd7"]
+[ext_resource type="Material" uid="uid://eaqgtoibtmr" path="res://materials/blue_mat.tres" id="21_8ovwj"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sbrea"]
+size = Vector3(1, 2, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7rm5r"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_7gwsy"]
+radius = 7.0
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_fsun1"]
+
+[sub_resource type="Sky" id="Sky_j1tlt"]
+sky_material = SubResource("PhysicalSkyMaterial_fsun1")
+
+[sub_resource type="Environment" id="Environment_r70ab"]
+background_mode = 2
+background_energy_multiplier = 4.0
+sky = SubResource("Sky_j1tlt")
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_ohssf"]
+vertices = PackedVector3Array(0.962873, 0.02, 3.3777, 2.96287, 0.02, 3.3777, 2.71287, 0.02, 1.3777, 0.962873, 0.02, -0.1223, -3.78713, 0.02, -3.8723, -3.78713, 0.02, 3.3777, -3.03713, 0.02, -0.8723, -3.03713, 0.02, -2.6223, 3.46287, 0.02, -0.1223, 0.962873, 0.02, -0.1223, 2.71287, 0.02, 1.3777, 3.46287, 0.02, 0.6277, -3.78713, 0.02, -3.8723, -3.03713, 0.02, -2.6223, -2.28713, 0.02, -3.3723, 4.21287, 0.02, -0.8723, 3.46287, 0.02, -0.1223, 3.46287, 0.02, 0.6277, 7.21287, 0.02, 0.6277, 3.46287, 0.02, -3.3723, 4.21287, 0.02, -2.6223, 7.21287, 0.02, -3.8723, -3.78713, 0.02, 3.3777, -2.28713, 0.02, 3.3777, -2.28713, 0.02, -0.3723, -3.03713, 0.02, -0.8723, 4.21287, 0.02, -0.8723, 7.21287, 0.02, 0.6277, 7.21287, 0.02, -3.8723, 4.21287, 0.02, -2.6223, 3.46287, 0.02, -3.3723, 7.21287, 0.02, -3.8723, -3.78713, 0.02, -3.8723, -2.28713, 0.02, -3.3723, 9.96287, 0.02, 1.3777, 9.96287, 0.02, 2.3777, 13.9629, 0.02, 2.3777, 7.21287, 0.02, -3.8723, 7.21287, 0.02, 0.6277, 9.21287, 0.02, 0.6277, 9.21287, 0.02, 0.6277, 9.96287, 0.02, 1.3777, 13.9629, 0.02, 2.3777, 13.9629, 0.02, -3.8723, 7.21287, 0.02, -3.8723, -2.28713, 0.02, 5.3777, -2.28713, 0.02, 3.3777, -3.78713, 0.02, 3.3777, -3.78713, 0.02, 13.8777, 3.46287, 0.02, 3.8777, 2.96287, 0.02, 3.3777, 0.962873, 0.02, 3.3777, 0.962873, 0.02, 5.3777, 0.212873, 0.02, 6.1277, -1.53713, 0.02, 6.1277, -3.78713, 0.02, 13.8777, 3.46287, 0.02, 3.8777, 0.962873, 0.02, 5.3777, 0.212873, 0.02, 6.1277, -3.78713, 0.02, 13.8777, 4.96287, 0.02, 13.8777, 9.21287, 0.02, 3.8777, 13.9629, 0.02, 2.3777, 9.96287, 0.02, 2.3777, 9.96287, 0.02, 3.1277, 13.9629, 0.02, 2.3777, 9.96287, 0.02, 3.1277, 9.21287, 0.02, 3.8777, 4.96287, 0.02, 13.8777, 13.9629, 0.02, 13.8777, -1.53713, 0.02, 6.1277, -2.28713, 0.02, 5.3777, -3.78713, 0.02, 13.8777)
+polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(7, 6, 4), PackedInt32Array(4, 6, 5), PackedInt32Array(11, 10, 8), PackedInt32Array(8, 10, 9), PackedInt32Array(14, 13, 12), PackedInt32Array(16, 15, 17), PackedInt32Array(17, 15, 18), PackedInt32Array(21, 20, 19), PackedInt32Array(24, 23, 25), PackedInt32Array(25, 23, 22), PackedInt32Array(29, 28, 26), PackedInt32Array(26, 28, 27), PackedInt32Array(33, 32, 30), PackedInt32Array(30, 32, 31), PackedInt32Array(36, 35, 34), PackedInt32Array(39, 38, 37), PackedInt32Array(41, 40, 42), PackedInt32Array(42, 40, 43), PackedInt32Array(43, 40, 44), PackedInt32Array(46, 45, 47), PackedInt32Array(47, 45, 48), PackedInt32Array(50, 49, 51), PackedInt32Array(51, 49, 52), PackedInt32Array(55, 54, 53), PackedInt32Array(57, 56, 58), PackedInt32Array(58, 56, 61), PackedInt32Array(58, 61, 60), PackedInt32Array(58, 60, 59), PackedInt32Array(64, 63, 62), PackedInt32Array(66, 65, 67), PackedInt32Array(67, 65, 69), PackedInt32Array(67, 69, 68), PackedInt32Array(72, 71, 70)]
+cell_height = 0.01
+agent_radius = 1.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_d8amr"]
+size = Vector3(10, 0.1, 10)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3uj4q"]
+size = Vector3(5, 2, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bgqe4"]
+size = Vector3(20, 2, 1)
+
+[node name="14Menus" type="Node3D"]
+script = ExtResource("1_wpvnw")
+
+[node name="Enemy" type="Node3D" parent="." node_paths=PackedStringArray("navigationAgent")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.64598, 0, -3.72473)
+script = ExtResource("2_nook3")
+movementSpeed = 5.0
+navigationAgent = NodePath("NavigationAgent3D")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Enemy"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Enemy/StaticBody3D"]
+shape = SubResource("BoxShape3D_sbrea")
+
+[node name="Damagable" type="Node3D" parent="Enemy/StaticBody3D" node_paths=PackedStringArray("ContainerNode", "MeshReference") groups=["DamagableGroup", "EnemyDamagable"]]
+script = ExtResource("3_s0xax")
+ScaleSize = Vector3(1.2, 1.2, 1.2)
+RotationDegrees = 60.0
+HitPoints = 3
+ContainerNode = NodePath("../..")
+MeshReference = NodePath("../CSGBox3D2")
+BaseMaterial = ExtResource("4_nvg2n")
+HitMaterial = ExtResource("5_7ypge")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Enemy/StaticBody3D"]
+material_override = ExtResource("4_nvg2n")
+size = Vector3(1, 2, 1)
+
+[node name="Detection" type="Node" parent="Enemy/StaticBody3D" node_paths=PackedStringArray("enemyNavController")]
+script = ExtResource("6_58n5y")
+enemyNavController = NodePath("../..")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="Enemy"]
+avoidance_enabled = true
+
+[node name="CombatControl" type="Node" parent="Enemy" node_paths=PackedStringArray("enemyCoreControl", "thisDamagable")]
+script = ExtResource("7_kx6gf")
+enemyCoreControl = NodePath("..")
+thisDamagable = NodePath("../StaticBody3D/Damagable")
+projectileScene = ExtResource("8_hj76r")
+firingCooldown = 0.5
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.07065, 0)
+collision_layer = 2
+script = ExtResource("9_sm2ld")
+movementSpeed = 8.0
+mouseSensitivity = 0.3
+
+[node name="Damagable" type="Node3D" parent="CharacterBody3D" node_paths=PackedStringArray("ContainerNode", "MeshReference") groups=["DamagableGroup"]]
+script = ExtResource("3_s0xax")
+ScaleSize = Vector3(1.2, 1.2, 1.2)
+RotationDegrees = 60.0
+HitPoints = 5
+ContainerNode = NodePath("..")
+MeshReference = NodePath("../CSGBox3D")
+BaseMaterial = ExtResource("5_7ypge")
+HitMaterial = ExtResource("10_mu7rc")
+
+[node name="CSGBox3D" parent="CharacterBody3D" instance=ExtResource("11_w73cc")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+shape = SubResource("BoxShape3D_7rm5r")
+
+[node name="CameraPivot" type="Node3D" parent="CharacterBody3D"]
+script = ExtResource("12_egijf")
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D/CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.954724, 0.297492, 0, -0.297492, 0.954724, 0, 0.928077, 2.63136)
+fov = 60.0
+
+[node name="RayCast3D" type="RayCast3D" parent="CharacterBody3D/CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.967383, 0.253319, 0, -0.253319, 0.967383, 0, 0.25, 0)
+target_position = Vector3(0, 0, 5)
+
+[node name="CameraCollider" type="Node3D" parent="CharacterBody3D/CameraPivot" node_paths=PackedStringArray("cameraNode", "raycast3D")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+script = ExtResource("13_uwnva")
+cameraNode = NodePath("../Camera3D")
+raycast3D = NodePath("../RayCast3D")
+CameraColliderLayers = 1
+
+[node name="Hand" type="CSGBox3D" parent="CharacterBody3D/CameraPivot"]
+transform = Transform3D(1, 0, 0, 0, 0.973519, 0.228606, 0, -0.228606, 0.973519, 0.283071, 0.057444, -0.2)
+size = Vector3(0.05, 0.05, 0.3)
+
+[node name="RayCast3D" type="RayCast3D" parent="CharacterBody3D/CameraPivot/Hand"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.38419e-07, -0.152138)
+target_position = Vector3(0, 0, -30)
+
+[node name="BlasterController" type="Node3D" parent="CharacterBody3D/CameraPivot/Hand" node_paths=PackedStringArray("raycast", "BlasterAudio")]
+script = ExtResource("14_tk226")
+raycast = NodePath("../RayCast3D")
+laserEffect = ExtResource("15_f3dok")
+BlasterAudio = NodePath("../AudioStreamPlayer3D")
+BlasterShotClip = ExtResource("16_5pkfs")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="CharacterBody3D/CameraPivot/Hand"]
+stream = ExtResource("16_5pkfs")
+bus = &"Blaster"
+
+[node name="ScoreUIContainer" type="Control" parent="CharacterBody3D" node_paths=PackedStringArray("playerDamagable", "victoryScreen", "lossScreen") groups=["ScoringGroup"]]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("17_e23jp")
+playerDamagable = NodePath("../Damagable")
+victoryScreen = NodePath("VictoryScreen")
+lossScreen = NodePath("LossScreen")
+
+[node name="VictoryScreen" type="Control" parent="CharacterBody3D/ScoreUIContainer"]
+visible = false
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="CharacterBody3D/ScoreUIContainer/VictoryScreen"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CharacterBody3D/ScoreUIContainer/VictoryScreen"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -84.0
+offset_right = 84.0
+offset_bottom = 52.0
+grow_horizontal = 2
+text = "You Won!
+Thankyou for playing!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CharacterBody3D/ScoreUIContainer/VictoryScreen"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="Restart" type="Button" parent="CharacterBody3D/ScoreUIContainer/VictoryScreen/HBoxContainer"]
+layout_mode = 2
+text = "Restart"
+
+[node name="Quit" type="Button" parent="CharacterBody3D/ScoreUIContainer/VictoryScreen/HBoxContainer"]
+layout_mode = 2
+text = "Quit"
+
+[node name="LossScreen" type="Control" parent="CharacterBody3D/ScoreUIContainer"]
+visible = false
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="CharacterBody3D/ScoreUIContainer/LossScreen"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="CharacterBody3D/ScoreUIContainer/LossScreen"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -84.0
+offset_right = 84.0
+offset_bottom = 52.0
+grow_horizontal = 2
+text = "You Loose!!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CharacterBody3D/ScoreUIContainer/LossScreen"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="Restart" type="Button" parent="CharacterBody3D/ScoreUIContainer/LossScreen/HBoxContainer"]
+layout_mode = 2
+text = "Restart"
+
+[node name="Quit" type="Button" parent="CharacterBody3D/ScoreUIContainer/LossScreen/HBoxContainer"]
+layout_mode = 2
+text = "Quit"
+
+[node name="PlayerDetectionRadius" type="Area3D" parent="CharacterBody3D" node_paths=PackedStringArray("PlayerContainer")]
+script = ExtResource("18_16ald")
+PlayerContainer = NodePath("..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D/PlayerDetectionRadius"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.14964, 0, 0)
+shape = SubResource("SphereShape3D_7gwsy")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_r70ab")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.702974, -0.00886636, 0.71116, -0.662659, 0.354963, 0.659458, -0.258282, -0.934838, 0.243654, 2.77565, 3.64767, 0)
+shadow_enabled = true
+
+[node name="BGAmbience" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("19_60xu5")
+autoplay = true
+bus = &"WorldAmbience"
+
+[node name="MusicAmbience" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("20_tfdd7")
+autoplay = true
+bus = &"MusicAmbience"
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("NavigationMesh_ohssf")
+
+[node name="Ground" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 0)
+material_override = ExtResource("4_nvg2n")
+size = Vector3(10, 0.1, 10)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Ground"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Ground/StaticBody3D"]
+shape = SubResource("BoxShape3D_d8amr")
+
+[node name="Ground2" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.94528, -0.05, 0)
+material_override = ExtResource("4_nvg2n")
+size = Vector3(10, 0.1, 10)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Ground2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Ground2/StaticBody3D"]
+shape = SubResource("BoxShape3D_d8amr")
+
+[node name="Ground3" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.05, 10.0283)
+material_override = ExtResource("4_nvg2n")
+size = Vector3(10, 0.1, 10)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Ground3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Ground3/StaticBody3D"]
+shape = SubResource("BoxShape3D_d8amr")
+
+[node name="Ground4" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.94528, -0.05, 10.0283)
+material_override = ExtResource("4_nvg2n")
+size = Vector3(10, 0.1, 10)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Ground4"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Ground4/StaticBody3D"]
+shape = SubResource("BoxShape3D_d8amr")
+
+[node name="Wall01" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.487635, 1, -1.65207)
+material_override = ExtResource("21_8ovwj")
+size = Vector3(5, 2, 1)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Wall01"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Wall01/StaticBody3D"]
+shape = SubResource("BoxShape3D_3uj4q")
+
+[node name="Wall02" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.23725, 1, 2.35674)
+material_override = ExtResource("21_8ovwj")
+size = Vector3(5, 2, 1)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Wall02"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Wall02/StaticBody3D"]
+shape = SubResource("BoxShape3D_3uj4q")
+
+[node name="Wall03" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.690837, 1, 2.4538)
+material_override = ExtResource("21_8ovwj")
+size = Vector3(5, 2, 1)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Wall03"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Wall03/StaticBody3D"]
+shape = SubResource("BoxShape3D_3uj4q")
+
+[node name="Wall04" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -5.53713, 1, 4.92684)
+material_override = ExtResource("21_8ovwj")
+size = Vector3(20, 2, 1)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Wall04"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Wall04/StaticBody3D"]
+shape = SubResource("BoxShape3D_bgqe4")
+
+[node name="Wall07" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 15.4815, 1, 4.92684)
+material_override = ExtResource("21_8ovwj")
+size = Vector3(20, 2, 1)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Wall07"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Wall07/StaticBody3D"]
+shape = SubResource("BoxShape3D_bgqe4")
+
+[node name="Wall05" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4.89259, 1, -5.6223)
+material_override = ExtResource("21_8ovwj")
+size = Vector3(20, 2, 1)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Wall05"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Wall05/StaticBody3D"]
+shape = SubResource("BoxShape3D_bgqe4")
+
+[node name="Wall06" type="CSGBox3D" parent="NavigationRegion3D"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 4.89259, 1, 15.5954)
+material_override = ExtResource("21_8ovwj")
+size = Vector3(20, 2, 1)
+metadata/_edit_group_ = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="NavigationRegion3D/Wall06"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Wall06/StaticBody3D"]
+shape = SubResource("BoxShape3D_bgqe4")
+
+[connection signal="onDestruction" from="Enemy/StaticBody3D/Damagable" to="CharacterBody3D/ScoreUIContainer" method="onVictory"]
+[connection signal="velocity_computed" from="Enemy/NavigationAgent3D" to="Enemy" method="On_NavigationAgent3DVelocityComputed"]
+[connection signal="pressed" from="CharacterBody3D/ScoreUIContainer/VictoryScreen/HBoxContainer/Restart" to="CharacterBody3D/ScoreUIContainer" method="restart"]
+[connection signal="pressed" from="CharacterBody3D/ScoreUIContainer/VictoryScreen/HBoxContainer/Quit" to="CharacterBody3D/ScoreUIContainer" method="quit"]
+[connection signal="pressed" from="CharacterBody3D/ScoreUIContainer/LossScreen/HBoxContainer/Restart" to="CharacterBody3D/ScoreUIContainer" method="restart"]
+[connection signal="pressed" from="CharacterBody3D/ScoreUIContainer/LossScreen/HBoxContainer/Quit" to="CharacterBody3D/ScoreUIContainer" method="quit"]
+[connection signal="body_entered" from="CharacterBody3D/PlayerDetectionRadius" to="CharacterBody3D/PlayerDetectionRadius" method="onAreaEnter"]
+[connection signal="body_exited" from="CharacterBody3D/PlayerDetectionRadius" to="CharacterBody3D/PlayerDetectionRadius" method="onAreaExit"]

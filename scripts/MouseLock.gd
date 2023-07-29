@@ -12,4 +12,4 @@ func _input(event: InputEvent) -> void:
 			Input.MOUSE_MODE_CAPTURED:
 				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE);
 			Input.MOUSE_MODE_VISIBLE:
-				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+				Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED);

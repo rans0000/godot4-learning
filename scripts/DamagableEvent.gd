@@ -1,4 +1,5 @@
 extends Damagable
+class_name  DamagableEvent;
 
 @export var TransitionType: Tween.TransitionType;
 @export var ScaleSize: Vector3;
@@ -89,9 +90,10 @@ func onHit():
 	if (endOfGame):
 		newTween.connect("finished", onCompleteDestruction.bind());
 	else:
+		newTween.connect("finished", onReset.bind());
 		if (HitPoints <= 0):
+			get_tree().call_group("ScoringGroup", "onEntityDeath");
+			newTween.connect("finished", onCompleteDestruction.bind());
 			onDestruction.emit();
-		else:
-			get_tree().call_group("ScoringGroup", "onPointsAdded", 1);
-			newTween.connect("finished", onReset.bind());
+	
 	newTween.play();
