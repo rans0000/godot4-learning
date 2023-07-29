@@ -2,7 +2,7 @@ extends Node3D
 class_name EnemyProjectileControl;
 
 @export var originalDamagable: Damagable;
-@export var moveSpeed: float = 10;
+@export var moveSpeed: float = 15;
 @export var lifetime: float =3.0;
 
 func _physics_process(delta: float) -> void:

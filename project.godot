@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Test 1"
-run/main_scene="res://scenes/01_movement_scene.tscn"
+run/main_scene="res://scenes/13PlayerDamage.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://icon.svg"
 
