@@ -39,13 +39,13 @@ func onHit():
 	newTween = create_tween();
 	newTween.set_trans(TransitionType);
 	
-	newTween.tween_property(
-		MeshReference,
-		"global_position",
-		MeshReference.global_position + Vector3(0, 1, 0),
-		flashDuration/2
-	);
-	newTween.parallel();
+#	newTween.tween_property(
+#		MeshReference,
+#		"global_position",
+#		MeshReference.global_position + Vector3(0, 1, 0),
+#		flashDuration/2
+#	);
+#	newTween.parallel();
 	newTween.tween_property(
 		MeshReference,
 		"global_rotation_degrees",
@@ -65,13 +65,13 @@ func onHit():
 	
 	# Divider ----
 	
-	newTween.tween_property(
-		MeshReference,
-		"global_position",
-		originalPosition,
-		flashDuration/2
-	);
-	newTween.parallel();
+#	newTween.tween_property(
+#		MeshReference,
+#		"global_position",
+#		originalPosition,
+#		flashDuration/2
+#	);
+#	newTween.parallel();
 	newTween.tween_property(
 		MeshReference,
 		"global_rotation_degrees",
